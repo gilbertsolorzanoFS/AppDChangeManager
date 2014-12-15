@@ -106,7 +106,7 @@ public class ACMS {
     public static final String TYPE="type";
     
     public static final String[] CHANGE_GET_OPTS={"Not-ReadyForApproval","ReadyForApproval","Not-Approved","Approved","Non-Completed","Completed","All","Single"}; //parameter type
-    public static final String[] CHANGE_POST_OPTS={"add_chg","update_chg","delete_chg","execute_chg","approve_chg","readyForApproval_chg","reject_chg"};
+    public static final String[] CHANGE_POST_OPTS={"add_chg","update_chg","delete_chg","execute_chg","approve_chg","readyForApproval_chg"};
     public static final String[] REQUEST_POST_OPTS={"add_request","update_request","delete_request"};
     public static final String[] CONFIG_CHGS={"add_auth","add_conn","add_contr","update_auth","update_conn","update_contr","del_auth","del_conn","del_contr","chg_passwd","add_conf","update_conf","del_conf"};
     public static final String[] ITEM_GETS={"connectionId","applicationId","tierId",AUTO_DISCOVERY,CUSTOM_MATCH_POJO,HEALTH_RULE,"applications","tiers","custom-match-servlet"};
@@ -443,7 +443,7 @@ public class ACMS {
      * </p>
      */
     public static final String AUTH_UPDATE_ROW=new StringBuilder().append("UPDATE ").append(AUTH_TABLE)
-            .append("set displayName=?, userName=?, password=?, acctType=? , groupName=? WHERE id=?").toString();
+            .append(" set displayName=?, userName=?, password=?, acctType=? , groupName=? WHERE id=?").toString();
     
     /**
      * <p>

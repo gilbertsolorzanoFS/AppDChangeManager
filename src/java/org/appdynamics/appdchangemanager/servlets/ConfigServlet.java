@@ -283,11 +283,12 @@ public class ConfigServlet extends HttpServlet {
                 break;
             case 9: //chg_passwd, no need to return anything
                 if(ServletUtil.chkChangePasswdParams(pMap)){
-                    log.info("We need to figure this out.");
+                    //log.info("We need to figure this out. ");
                     String pwd=Crypto.crypt(pMap.get(ACMS.PASSWORD));
                     Auth auth = aa.getSingleAuth(ACMS.convertToLong(pMap.get(ACMS.ID)));
+                    //log.info(auth.toString());
                     if( ms.isAdminSession(session.getId(), user) || auth.getUserName().equals(user)){
-                        log.info("Updating the password.");
+                        //log.info("Updating the password." + pMap.get(ACMS.PASSWORD));
                         auth.setPassword(pwd);
                         aa.updateAuth(auth);
                     }

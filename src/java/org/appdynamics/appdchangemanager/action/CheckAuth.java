@@ -21,7 +21,7 @@ public class CheckAuth {
     private static final Logger log=Logger.getLogger(CheckAuth.class.getName());
     
     public static boolean checkUserPass(String user, String password){
-        log.info(new StringBuilder().append("User: ").append(user).append(" - ").append(password).toString());
+        //log.info(new StringBuilder().append("User: ").append(user).append(" - ").append(password).toString());
         boolean valid=false;
         if(user == null || password == null) return valid;
         
@@ -29,7 +29,7 @@ public class CheckAuth {
         
         // We did not find the user
         if(userAuth == null  ) return valid;
-        log.info(new StringBuilder().append("Found: ").append(Crypto.decrypt(userAuth.getPassword())).toString());
+        //log.info(new StringBuilder().append("Found:- ").append(userAuth).toString());
         //We found the 
         if(Crypto.decrypt(userAuth.getPassword()).equals(password)) valid=true;
         

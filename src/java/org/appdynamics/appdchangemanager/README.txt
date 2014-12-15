@@ -56,6 +56,7 @@ Rename and add new <TOMCAT>/webapps/ROOT/index.jsp , to redirect.
 <% response.sendRedirect(response.encodeRedirectURL(request.getContextPath() +
         "/AppDChangeManager")); %>
 
+cp lib/derbyclient.jar  lib/derby.jar  lib/derbynet.jar lib/derby
 
 
 HTTP variables

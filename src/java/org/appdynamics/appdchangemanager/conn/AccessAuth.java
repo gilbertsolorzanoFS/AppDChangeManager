@@ -69,10 +69,6 @@ public class AccessAuth {
         
         PreparedStatement ps=null;
         ResultSet rs = null;
-        Auth user = getSingleAuth(il.getUserName());
-        if(user != null){
-            return false;
-        }
         if(conn == null) init();
         try{
             
