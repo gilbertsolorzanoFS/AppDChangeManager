@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/AppDChangeManager">
+  <Resource auth="Container" driverClassName="org.apache.derby.jdbc.ClientDriver" 
+            maxActive="10" maxIdle="5" name="jdbc/chgdb" passwd="appDPassOne" 
+            type="javax.sql.DataSource" 
+            url="jdbc:derby://localhost:1527/appd_chdb;create=true" username="appd"/>
+</Context>
