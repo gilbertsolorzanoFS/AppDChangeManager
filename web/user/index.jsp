@@ -24,13 +24,35 @@
     <title>User Changes Page</title>
   </head>
   <body>
+    <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">AppDChangeManager</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="../user/index.jsp">User<span class="sr-only">(current)</span></a></li>
+          <li><a href="../admin/index.jsp">Admin</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <form action="/AppDChangeManager/LogoutServlet" method="post" class="logout">
+            <input type="submit" class="btn btn-warning" value="Logout">
+          </form>
+        </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
     <div class="container">
       <h1>User Changes</h1>
-      <div class="">
-        <form action="/AppDChangeManager/LogoutServlet" method="post" class="pull-right">
-          <input type="submit" class="btn btn-warning" value="Logout">
-        </form>
-      </div>
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#edit_changes" aria-controls="edit_changes" role="tab" data-toggle="tab" aria-expanded="true">Edit Changes</a></li>
         <li role="presentation"><a href="#view_changes" aria-controls="view_changes" role="tab" data-toggle="tab">View Changes</a></li>
