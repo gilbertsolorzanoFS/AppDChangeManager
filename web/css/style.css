@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : sytle
     Created on : Nov 8, 2014, 12:05:16 PM
     Author     : gilbert.solorzano
@@ -12,4 +12,17 @@
 
 .col2{
     background: #6BC0FF;
+}
+
+.login-area {
+  width: 400px;
+}
+
+.col-center{
+  margin:0 auto;
+}
+
+.scroll_table {
+  max-height: 170px;
+  overflow-y: overlay;
 }
