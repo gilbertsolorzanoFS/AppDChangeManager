@@ -106,7 +106,7 @@ public class ACMS {
     public static final String TYPE="type";
     
     public static final String[] CHANGE_GET_OPTS={"Not-ReadyForApproval","ReadyForApproval","Not-Approved","Approved","Non-Completed","Completed","All","Single"}; //parameter type
-    public static final String[] CHANGE_POST_OPTS={"add_chg","update_chg","delete_chg","execute_chg","approve_chg","readyForApproval_chg"};
+    public static final String[] CHANGE_POST_OPTS={"add_chg","update_chg","delete_chg","execute_chg","approve_chg","readyForApproval_chg","reject_chg"};
     public static final String[] REQUEST_POST_OPTS={"add_request","update_request","delete_request"};
     public static final String[] CONFIG_CHGS={"add_auth","add_conn","add_contr","update_auth","update_conn","update_contr","del_auth","del_conn","del_contr","chg_passwd","add_conf","update_conf","del_conf"};
     public static final String[] ITEM_GETS={"connectionId","applicationId","tierId",AUTO_DISCOVERY,CUSTOM_MATCH_POJO,HEALTH_RULE,"applications","tiers","custom-match-servlet"};
@@ -618,7 +618,7 @@ public class ACMS {
      *    controllerId (BIGINT), id (BIGINT) <br>
      * </p>
      */
-    public static final String CONNECTION_DELETE_INDIV_ID=new StringBuilder().append("DELETE FROM ")
+    public static final String CONNECTION_DELETE_INDIV_AUTH=new StringBuilder().append("DELETE FROM ")
             .append(CONNECTION_TABLE).append(" WHERE authId=? AND controllerId=? ").toString();
     
     /**
@@ -628,7 +628,7 @@ public class ACMS {
      *    controllerId (BIGINT), id (BIGINT) <br>
      * </p>
      */
-    public static final String CONNECTION_DELETE_INDIV=new StringBuilder().append("DELETE FROM ")
+    public static final String CONNECTION_DELETE_INDIV_ID=new StringBuilder().append("DELETE FROM ")
             .append(CONNECTION_TABLE).append(" WHERE id=?").toString();
     
     
@@ -776,7 +776,7 @@ public class ACMS {
      *    REQUIRES: id (BIGINT)<br>
      * </p>
      */
-    public static final String CONTROLLER_SELECT_INDIV=new StringBuilder().append("SELECT id,displayName,fqdn,account,port,useSSL from ")
+    public static final String CONTROLLER_SELECT_INDIV=new StringBuilder().append("SELECT id,fqdn,displayName,account,port,useSSL from ")
             .append(CONTROLLER_TABLE).append(" where id=?").toString();
     
     /**
@@ -786,7 +786,7 @@ public class ACMS {
      *    port (String 8)<br>
      * </p>
      */
-    public static final String CONTROLLER_SELECT_INDIV_CHECK=new StringBuilder().append("SELECT id,displayName,fqdn,account,port,useSSL from ")
+    public static final String CONTROLLER_SELECT_INDIV_CHECK=new StringBuilder().append("SELECT id,fqdn,displayName,account,port,useSSL from ")
             .append(CONTROLLER_TABLE).append(" where fqdn=? AND account=? AND port=?").toString();
     
     /**
@@ -796,7 +796,7 @@ public class ACMS {
      *    account (String 128), port (String 8), useSSL (SMALLINT),<br>
      * </p>
      */
-    public static final String CONTROLLER_SELECT_ALL=new StringBuilder().append("SELECT id,displayName,fqdn,account,port,useSSL from ")
+    public static final String CONTROLLER_SELECT_ALL=new StringBuilder().append("SELECT id,fqdn,displayName,account,port,useSSL from ")
             .append(CONTROLLER_TABLE).toString();
     
     /**

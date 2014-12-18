@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import org.appdynamics.appdchangemanager.action.ManageCaches;
 import org.appdynamics.appdchangemanager.action.ProcessChange;
@@ -129,7 +130,7 @@ private static final ManageSessions ms = new ManageSessions();
                 chgs = MC.chgCache.getCompletedChanges();
                 //chgs = ac.getCompletedChange(true);
                 break;
-            case 6:
+            case 6: // This should completed -- 0
                 chgs = MC.chgCache.getCompletedChanges();
                 chgs.addAll(MC.chgCache.getLiveChanges());
                 //chgs = ac.getAllChange();
@@ -223,123 +224,137 @@ private static final ManageSessions ms = new ManageSessions();
         String readyForApproval=null;
         String payload="";
         
-        log.info("Posting a change! " + typeIndex);
-        switch(typeIndex){
-            case 0: // Add a chnage
-                // Add a change, can be execute by any user
-                descr = (pMap.containsKey(ACMS.DESCR)) ? pMap.get(ACMS.DESCR):"Description::";
-                chg=new Change(Calendar.getInstance().getTimeInMillis(),user,descr);
-                MC.chgCache.addLiveChange(chg);
-                //ac.addChange(chg);
-                payload=gson.toJson(chg);
-                break;
-            case 1:// Update can be executed by requester or admin       
-                if(id != null) idNum=new Long(id);
-                chg = MC.chgCache.getChange(idNum);
-                //chg = ac.getSingleChange(idNum);
-                
-                if(chg != null){ // or its an admin
-                    if(chg.getRequester().equals(user) || ms.isAdminSession(session.getId(), user)){
-                        // We now execute the update, what is updatable ?
-                        descr = (pMap.containsKey(ACMS.DESCR)) ? pMap.get(ACMS.DESCR):null;
-                        if(descr != null){ chg.setDescr(descr);}
-                        readyForApproval = (pMap.containsKey(ACMS.READY_FOR_APPROVAL)) ? pMap.get(ACMS.READY_FOR_APPROVAL):null;
-                        if(readyForApproval != null) {chg.setReadyForApproval(ACMS.convertToBoolean(readyForApproval));}
-                        MC.chgCache.updateLiveChange(chg);
-                        //ac.addUpdate(chg);
-                        payload=gson.toJson(chg);
-                    }
-                }
-                break;
-            case 2:// Delete can be executed by requester or admin
-                
-                if(id != null) idNum=new Long(id);
-                chg = MC.chgCache.getChange(idNum);
-                //chg = ac.getSingleChange(idNum);
-                
-                if(chg != null){ // or its an admin
-                    if(chg.getRequester().equals(user) || ms.isAdminSession(session.getId(), user)){
-                        MC.chgCache.deleteLiveChange(chg);
-                        //ac.deleteChange(idNum);
-                    }
-                }
-                
-                break;
-            case 3:
-                // Only admin executes the action
-                if(ms.isAdminSession(session.getId(), user)){
+        log.info("Posting a change! " + typeIndex  + " inError " + inError);
+        if(!inError){
+            switch(typeIndex){
+                case 0: // Add a chnage
+                    // Add a change, can be execute by any user
+                    descr = (pMap.containsKey(ACMS.DESCR)) ? pMap.get(ACMS.DESCR):"Description::";
+                    chg=new Change(Calendar.getInstance().getTimeInMillis(),user,descr);
+                    MC.chgCache.addLiveChange(chg);
+                    //ac.addChange(chg);
+                    payload=gson.toJson(chg);
+                    break;
+                case 1:// Update can be executed by requester or admin       
                     if(id != null) idNum=new Long(id);
                     chg = MC.chgCache.getChange(idNum);
-                    int retVal = ProcessChange.executeChange(chg);
-                    if(retVal == 0){
-                        chg.setCompletedTime(java.util.Calendar.getInstance().getTimeInMillis());
-                        chg.setCompleted(true);
-                        MC.chgCache.updateLiveChange(chg);
-                        payload=gson.toJson(chg);
+                    //chg = ac.getSingleChange(idNum);
+
+                    if(chg != null){ // or its an admin
+                        if(chg.getRequester().equals(user) || ms.isAdminSession(session.getId(), user)){
+                            // We now execute the update, what is updatable ?
+                            descr = (pMap.containsKey(ACMS.DESCR)) ? pMap.get(ACMS.DESCR):null;
+                            if(descr != null){ chg.setDescr(descr);}
+                            readyForApproval = (pMap.containsKey(ACMS.READY_FOR_APPROVAL)) ? pMap.get(ACMS.READY_FOR_APPROVAL):null;
+                            if(readyForApproval != null) {chg.setReadyForApproval(ACMS.convertToBoolean(readyForApproval));}
+                            MC.chgCache.updateLiveChange(chg);
+                            //ac.addUpdate(chg);
+                            payload=gson.toJson(chg);
+                        }
                     }
-                }
-                break;
-            case 4:
-                // Only admin approves the actions
-                if(ms.isAdminSession(session.getId(), user)){
-                    
+                    break;
+                case 2:// Delete can be executed by requester or admin
+
                     if(id != null) idNum=new Long(id);
                     chg = MC.chgCache.getChange(idNum);
-                    
-                    if(chg != null){ 
-                        chg.setApproved(true);
-                        chg.setApprover(user);
-                        MC.chgCache.updateLiveChange(chg);
-                        payload=gson.toJson(chg);
+                    log.info("Found change for deletiong " + chg);
+
+                    if(chg != null){ // or its an admin
+                        log.info("Change user is " + chg.getRequester() + " I am " + user + " "+ ms.isAdminSession(session.getId(), user));
+                        if(chg.getRequester().equals(user) || ms.isAdminSession(session.getId(), user)){
+
+                            MC.chgCache.deleteLiveChange(chg);
+                            payload="";
+                            //ac.deleteChange(idNum);
+                        }
                     }
+
+                    break;
+                case 3:
+                    // Only admin executes the action
+                    if(ms.isAdminSession(session.getId(), user)){
+                        if(id != null) idNum=new Long(id);
+                        chg = MC.chgCache.getChange(idNum);
+                        chg.setRequests(MC.chgCache.getLiveRequestForChange(idNum));
+                        int retVal = ProcessChange.executeChange(chg);
+                        log.info("Executed the change with value : " + retVal);
+                        if(retVal == 0){
+                            chg.setCompletedTime(java.util.Calendar.getInstance().getTimeInMillis());
+                            chg.setCompleted(true);
+                            MC.chgCache.updateLiveChange(chg);
+                            payload=gson.toJson(chg);
+                        }else{
+                            log.warning(new StringBuilder().append("Unable to execute change: ").append(idNum).toString());
+                        }
+                    }
+                    break;
+                case 4:
+                    // Only admin approves the actions
+                    if(ms.isAdminSession(session.getId(), user)){
+
+                        if(id != null) idNum=new Long(id);
+                        chg = MC.chgCache.getChange(idNum);
+
+                        if(chg != null){ 
+                            chg.setApproved(true);
+                            chg.setApprover(user);
+                            MC.chgCache.updateLiveChange(chg);
+                            payload=gson.toJson(chg);
+                        }
+                    }
+
+                    break;
+                case 5: //ready for approval
+
+                        if(id != null) idNum=new Long(id);
+                        chg = MC.chgCache.getChange(idNum);
+
+                        if(chg != null && (chg.getRequester().equals(user) || ms.isAdminSession(session.getId(), user) )){ 
+                            chg.setReadyForApproval(true);
+                            MC.chgCache.updateLiveChange(chg);
+                            payload=gson.toJson(chg);
+                        }
+
+                    break;
+                case 6: //refuse, remove ready for approval
+                    if(ms.isAdminSession(session.getId(), user)){
+
+                        if(id != null) idNum=new Long(id);
+                        chg = chg = MC.chgCache.getChange(idNum);
+
+                        if(chg != null){ 
+                            chg.setReadyForApproval(false);
+                            chg.setApprover("");
+                            chg.setDescr(new StringBuilder().append("Rejected by: ")
+                                    .append(user).append(" on ")
+                                    .append(java.util.Calendar.getInstance().getTime())
+                                    .append(" -- ").append(chg.getDescr()).toString());
+                            MC.chgCache.updateLiveChange(chg);
+                            payload=gson.toJson(chg);
+                        }
+                    }
+                    break;
+                default:
+                    // Do nothing
+                    break;
+            }
+            PrintWriter out = response.getWriter();
+        
+                try {
+                    /* TODO output your page here. You may use following sample code. */
+                    response.setContentType("application/json");
+                    out.print(payload);
+                    out.flush();
+                } finally {            
+                    out.close();
                 }
-                
-                break;
-            case 5: //ready for approval
-                
-                    if(id != null) idNum=new Long(id);
-                    chg = MC.chgCache.getChange(idNum);
-                    
-                    if(chg != null && (chg.getRequester().equals(user) || ms.isAdminSession(session.getId(), user) )){ 
-                        chg.setReadyForApproval(true);
-                        MC.chgCache.updateLiveChange(chg);
-                        payload=gson.toJson(chg);
-                    }
-                
-                break;
-            case 6: //refuse, remove ready for approval
-                if(ms.isAdminSession(session.getId(), user)){
-                    
-                    if(id != null) idNum=new Long(id);
-                    chg = chg = MC.chgCache.getChange(idNum);
-                    
-                    if(chg != null){ 
-                        chg.setReadyForApproval(false);
-                        chg.setApprover("");
-                        chg.setDescr(new StringBuilder().append("Rejected by: ")
-                                .append(user).append(" on ")
-                                .append(java.util.Calendar.getInstance().getTime())
-                                .append(" -- ").append(chg.getDescr()).toString());
-                        MC.chgCache.updateLiveChange(chg);
-                        payload=gson.toJson(chg);
-                    }
-                }
-                break;
-            default:
-                // Do nothing
-                break;
+            
+        }else{
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+            response.sendRedirect("/index.jsp");
         }
         
-        PrintWriter out = response.getWriter();
         
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            response.setContentType("application/json");
-            out.print(payload);
-            out.flush();
-        } finally {            
-            out.close();
-        }
     }
 
     /**

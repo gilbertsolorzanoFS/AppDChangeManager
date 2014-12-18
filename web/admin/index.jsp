@@ -192,7 +192,7 @@ ${pageContext.request.contextPath}
                   </select>
                   <br>
                   <label for="acct_contr_form">Account</label>
-                  <input type="text" id="acct_contr_form" value="Account Name" class="text ui-widget-content ui-corner-all">
+                  <input type="text" id="acct_contr_form" value="customer1" class="text ui-widget-content ui-corner-all">
                   <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
                 </fieldset>
               </form>
@@ -244,7 +244,7 @@ ${pageContext.request.contextPath}
                     <th>Requester</th>
                     <th>Description</th>
                     <th>Approved</th>
-                    <th>Execute</th>
+                    <th>Read For Approval</th>
                   </tr>
                 </thead>
                 <tbody id="b_changes_table"></tbody>

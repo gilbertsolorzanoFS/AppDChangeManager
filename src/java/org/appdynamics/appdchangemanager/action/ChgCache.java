@@ -227,6 +227,17 @@ public class ChgCache {
         req.deleteRequest(_req.getId());
     }
     
+    public static synchronized void deleteLiveRequestFromChg(Long id){
+        java.util.Iterator<Request> _reqIt = liveRequests.values().iterator();
+        while(_reqIt.hasNext()){
+            Request _req=_reqIt.next();
+            if(_req.getChangeId()==id){
+                req.deleteRequest(_req.getId());
+                _reqIt.remove();
+            }
+        }
+    }
+    
     public static synchronized void deleteLiveRequest(Long id){
         liveRequests.remove(id);
         req.deleteRequest(id);
@@ -234,7 +245,7 @@ public class ChgCache {
     
     public static synchronized ArrayList<Change> getLiveChanges(){
         ArrayList<Change> chgs = new ArrayList<Change>();
-        
+        chgs.addAll(liveChanges.values());
         return chgs;
     }
     
@@ -280,12 +291,15 @@ public class ChgCache {
     }
     
     public static synchronized void deleteLiveChange(Change _chg){
+        deleteLiveRequestFromChg(_chg.getId());
+        
         chg.deleteChange(_chg);
         liveChanges.remove(_chg.getId());
     }
     
     public static synchronized void deleteLiveChange(Long id){
         Change _chg = liveChanges.get(id);
+        deleteLiveRequestFromChg(id);
         chg.deleteChange(_chg);
         liveChanges.remove(_chg.getId());
     }

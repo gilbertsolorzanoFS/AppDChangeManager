@@ -168,9 +168,9 @@ POPULATE.ready_for_approv = function(){
     var dataS = "/AppDChangeManager/ManageChanges?type=readyForApproval_chg&id="+changeId;
     
     console.log(dataS);
-    //$.post(dataS);
+    $.post(dataS);
     // Just going to load everything.
-    //POPULATE.reset_page();
+    POPULATE.reset_page();
     
 };
 
@@ -179,12 +179,12 @@ POPULATE.reset_page = function(){
     
     var url_1 = '/AppDChangeManager/ManageChanges?type=Not-ReadyForApproval';
     
-    $.getJSON(this.url_1,function(data, textStatus, jqXHR){
+    $.getJSON(url_1,function(data, textStatus, jqXHR){
                 POPULATE.changes(data);                      
-        }).fail(function(jqXHR, textStatus, errorThrown){
-                alert('Error grabbing data ' + errorThrown);
-                return;
-        });
+    }).fail(function(jqXHR, textStatus, errorThrown){
+            alert('Error grabbing data for a reset of page' + errorThrown);
+            return;
+    });
     
 };
 
@@ -240,9 +240,12 @@ POPULATE.changes = function(data){
                 +'</td><td>'+item.descr
                 +'</td><td>'+item.approved
                 +'</td><td>'+item.readyForApproval
-                +'</td></tr>');
+                +'</td><td class="del"><input type="button" value="Del"/></td></tr>');
     }
-    
+    $('#b_changes_table').find('.del :button').on('click',function(e){
+        POPULATE.chg_d(this);
+        e.preventDefault();
+    });
     POPULATE.change_action();
 
 
@@ -367,6 +370,7 @@ POPULATE.chg_d = function(button){
     //console.log("Deleting id " + dN);
     
     var dataS = "/AppDChangeManager/ManageChanges?type=delete_chg&id="+dN;
+    console.log(dataS);
     $.post(dataS);
     $row.remove();  
 };
@@ -378,8 +382,9 @@ POPULATE.req_d = function(button){
     // We need to delete here!!
     var dN=$row[0].childNodes[0].textContent;
     //console.log("Deleting id " + dN);
-    
-    var dataS = "/AppDChangeManager/ManageRequests?type=delete_request&id="+dN;
+    var tmpChange=$('#request_readyforappr').text().split(" ");
+    var changeId=tmpChange[1];
+    var dataS = "/AppDChangeManager/ManageRequests?type=delete_request&id="+dN+'&changeId='+changeId;
     $.post(dataS);
     $row.remove();  
 };
@@ -476,7 +481,7 @@ POPULATE.req_actions=function(){
                 }
 
             }).fail(function(jqXHR, textStatus, errorThrown){
-                    alert('Error grabbing data ' + errorThrown);
+                    alert('Error grabbing data for source connection' + errorThrown);
                     return;
             });
         }
@@ -501,7 +506,7 @@ POPULATE.req_actions=function(){
                 }
                 
             }).fail(function(jqXHR, textStatus, errorThrown){
-                    alert('Error grabbing data ' + errorThrown);
+                    alert('Error grabbing data for destination connection ' + errorThrown);
                     return;
             });
             
@@ -531,7 +536,7 @@ POPULATE.req_actions=function(){
                 }
                 
             }).fail(function(jqXHR, textStatus, errorThrown){
-                    alert('Error grabbing data ' + errorThrown);
+                    alert('Error grabbing data source applications' + errorThrown);
                     return;
             });
             // Grab the types
@@ -547,7 +552,7 @@ POPULATE.req_actions=function(){
                     }
                 
                 }).fail(function(jqXHR, textStatus, errorThrown){
-                        alert('Error grabbing data ' + errorThrown);
+                        alert('Error grabbing data source items.' + errorThrown);
                         return;
                 });
                 
@@ -573,7 +578,7 @@ POPULATE.req_actions=function(){
                 }
                 
             }).fail(function(jqXHR, textStatus, errorThrown){
-                    alert('Error grabbing data ' + errorThrown);
+                    alert('Error grabbing data destination applications' + errorThrown);
                     return;
             });
             

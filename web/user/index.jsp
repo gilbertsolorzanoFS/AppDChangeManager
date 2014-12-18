@@ -70,6 +70,7 @@
                     <th>Description</th>
                     <th>Approved</th>
                     <th>Execute</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody id="b_changes_table">
