@@ -31,11 +31,11 @@ Building:
 
 Configuration:
 -------------
---Apache Derby<br>
-    Data Directory: Create directory called 'dbs' for database files, make sure tomcat user <br>
-	has write access to the directory. For example: <CATALINE_HOME>/dbs<br>
-    Db Properties: Create file in the 'dbs' directory called derby.properties with the <br>
-	following entries:<br>
+<h3>Apache Derby</h3><br>
+    <p>Data Directory: Create directory called 'dbs' for database files, make sure tomcat user <br>
+	has write access to the directory. For example: <CATALINE_HOME>/dbs</p>
+    <p>Db Properties: Create file in the 'dbs' directory called derby.properties with the <br>
+	following entries:</p>
 ```java
 derby.stream.error.logSeverityLevel=0
 derby.database.fullAccessUsers=appd
@@ -45,23 +45,23 @@ derby.user.appd=appDPassOne
 derby.user.user1=appDPassOne
 derby.authentication.provider=builtin
 ```
---Tomcat<br>
-    Port Changes: Update tomcat's server.xml, change the port from 8080 to 9580 and <br>
-	8443 to 9543 to insure there isn't a port collision<br>
-    JAVA_OPTS Changes: Derby db requires that the JVM know about its installation directory<br>
-	make sure to add:<br>
-	JAVA_OPTS="${JAVA_OPTS} -Dderby.system.home=-Dderby.system.home=<CATALINA_HOME>/dbs"<br>
-    HEAP Changes: Update Java HEAP to be max 256MB, add more if needed<br>
-    ROOT Index.jsp Change: Update Tomcat's root index.jsp to send the user to the application <br>
-	application root '/AppDChangeManager'<br>
+<h3>Tomcat</h3><br>
+    <p>Port Changes: Update tomcat's server.xml, change the port from 8080 to 9580 and <br>
+	8443 to 9543 to insure there isn't a port collision</p>
+    <p>JAVA_OPTS Changes: Derby db requires that the JVM know about its installation directory<br>
+	make sure to add:<br></p>
+    <p>JAVA_OPTS="${JAVA_OPTS} -Dderby.system.home=-Dderby.system.home=<CATALINA_HOME>/dbs"</p>
+    <p>HEAP Changes: Update Java HEAP to be max 256MB, add more if needed</p>
+    <p>ROOT Index.jsp Change: Update Tomcat's root index.jsp to send the user to the application <br>
+	application root '/AppDChangeManager'</p>
 
 
 ```
 <% response.sendRedirect(response.encodeRedirectURL(request.getContextPath() +
         "/AppDChangeManager")); %>
 ```
-    Derby WAR: Added the 'derby.war' file into webapps directory<br>
-    Derby web.xml: Update the web.xml to add 'load-on-startup' options, as shown<br>
+    <p>Derby WAR: Added the 'derby.war' file into webapps directory<br></p>
+    <p>Derby web.xml: Update the web.xml to add 'load-on-startup' options, as shown<br></p>
 
 
 ```
@@ -69,11 +69,11 @@ derby.authentication.provider=builtin
 	<servlet-class> org.apache.derby.drda.NetServlet </servlet-class>
 	<load-on-startup>1</load-on-startup>
 ```
-    AppDChangeManager WAR: Copy the AppDChangeManager WAR file into the webapps directory.<br>
-    Start Tomcat: Start Tomcat to uncompress the WAR file, don't access the application<br>
-    Derby Jars: Copy the derby jar files into the Tomcat's lib directory: <br>
-	derbyclient.jar  derby.jar  derbynet.jar <br>
-    Restart Tomcat: Restart tomcat to insure it has the DERBY libraries loaded<br>
+    <p>AppDChangeManager WAR: Copy the AppDChangeManager WAR file into the webapps directory.<br></p>
+    <p>Start Tomcat: Start Tomcat to uncompress the WAR file, don't access the application<br></p>
+    <p>Derby Jars: Copy the derby jar files into the Tomcat's lib directory: <br>
+	derbyclient.jar  derby.jar  derbynet.jar <br></p>
+    <p>Restart Tomcat: Restart tomcat to insure it has the DERBY libraries loaded<br></p>
   
 
 
