@@ -64,9 +64,9 @@ derby.authentication.provider=builtin
 <p>Derby web.xml: Update the web.xml to add 'load-on-startup' options, as shown<br></p>
 
 ```java
-        <servlet-name> derbynet </servlet-name>
-	<servlet-class> org.apache.derby.drda.NetServlet </servlet-class>
-	<load-on-startup>1</load-on-startup>
+<servlet-name> derbynet </servlet-name>
+<servlet-class> org.apache.derby.drda.NetServlet </servlet-class>
+<load-on-startup>1</load-on-startup>
 ```
 
 <p>AppDChangeManager WAR: Copy the AppDChangeManager WAR file into the webapps directory.<br></p>
