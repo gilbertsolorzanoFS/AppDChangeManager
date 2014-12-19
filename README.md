@@ -60,6 +60,7 @@ derby.authentication.provider=builtin
 <% response.sendRedirect(response.encodeRedirectURL(request.getContextPath() +
         "/AppDChangeManager")); %>
 ```
+
     Derby WAR: Added the 'derby.war' file into webapps directory
     Derby web.xml: Update the web.xml to add 'load-on-startup' options, as shown
 
