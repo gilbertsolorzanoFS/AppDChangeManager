@@ -72,9 +72,9 @@ derby.authentication.provider=builtin
 <p>AppDChangeManager WAR: Copy the AppDChangeManager WAR file into the webapps directory.<br></p>
 <p>Start Tomcat: Start Tomcat to uncompress the WAR file, don't access the application<br></p>
 <p>Derby Jars: Copy the derby jar files into the Tomcat's lib directory: <br>
-*derbyclient.jar
-*derby.jar
-*derbynet.jar
+*derbyclient.jar<br>
+*derby.jar<br>
+*derbynet.jar<br>
 </p>
 <p>Restart Tomcat: Restart tomcat to insure it has the DERBY libraries loaded<br></p>
   
