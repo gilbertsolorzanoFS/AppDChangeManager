@@ -2,20 +2,27 @@ AppDChangeManager
 ===========
 
 The AppDChangeManager solution allows users to select auto-discovery rules, custom-match
-rules and health-rule so that they can be transfered from on AppDynamics Application to
+rules and health-rule so that they can be transfered from one AppDynamics application to
 another AppDynamics application. This will help AppDynamics Administrators by reducing
 the work associated with updating configurations. The administrator just need to give
 users accesses to an AppDynamics application sandbox or any non-production AppDynamics
-application so that they can create health-rule, update auto-discovery rule and/or
-health-rules. The user then uses the Web UI, to create a change and add specific items
-to be transfered.
+application so that they can create their health-rules, update auto-discovery rules and/or
+health-rules. The user then uses the Web UI, to create a change and add specific requests
+for items to be transfered. The WebUI Administrators can then approve the change and 
+execute the change. If they find a problem with the change the can also reject the change.
+Once the WebUI Administrator executes a change, the appropriate REST calls are made to
+export the items from the source controller. The exported XML is then written to a file
+as a backup. The solution will also attempt to export the item from the destination and 
+save the XML into a file. Then the XML output from the source is used to in a REST call
+to post to the destination controller. Once the change operation is complete an AppDynamics'
+Event is posted to the destination controller listing the changes that took place.
 
 Requirements:
 ------------
 Requires ant to build the package
 Requires Apache Derby (Version 10.11.1.1 needed libraries provided)
 Requires Application server, tested with Tomcat server
-Requires Google's Gson utility, 
+Requires Google's Gson utility (provided)
 
 Building:
 --------
