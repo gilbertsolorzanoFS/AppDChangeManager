@@ -54,12 +54,16 @@ derby.authentication.provider=builtin
     HEAP Changes: Update Java HEAP to be max 256MB, add more if needed
     ROOT Index.jsp Change: Update Tomcat's root index.jsp to send the user to the application 
 	application root '/AppDChangeManager'
+
+
 '''java
 <% response.sendRedirect(response.encodeRedirectURL(request.getContextPath() +
         "/AppDChangeManager")); %>
 '''
     Derby WAR: Added the 'derby.war' file into webapps directory
     Derby web.xml: Update the web.xml to add 'load-on-startup' options, as shown
+
+
 '''java
         <servlet-name> derbynet </servlet-name>
 	<servlet-class> org.apache.derby.drda.NetServlet </servlet-class>
