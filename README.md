@@ -63,20 +63,20 @@ derby.authentication.provider=builtin
 <p>Derby WAR: Added the 'derby.war' file into webapps directory<br></p>
 <p>Derby web.xml: Update the web.xml to add 'load-on-startup' options, as shown<br></p>
 
+
 ```java
 <servlet-name> derbynet </servlet-name>
 <servlet-class> org.apache.derby.drda.NetServlet </servlet-class>
 <load-on-startup>1</load-on-startup>
 ```
 
-<p>AppDChangeManager WAR: Copy the AppDChangeManager WAR file into the webapps directory.<br></p>
-<p>Start Tomcat: Start Tomcat to uncompress the WAR file, don't access the application<br></p>
-<p>Derby Jars: Copy the derby jar files into the Tomcat's lib directory: <br>
+<p>AppDChangeManager WAR: Copy the AppDChangeManager WAR file into the webapps directory.</p>
+<p>Start Tomcat: Start Tomcat to uncompress the WAR file, don't access the application</p>
+<p>Derby Jars: Copy the derby jar files into the Tomcat's lib directory: </p>
 *derbyclient.jar<br>
 *derby.jar<br>
 *derbynet.jar<br>
-</p>
-<p>Restart Tomcat: Restart tomcat to insure it has the DERBY libraries loaded<br></p>
+<p>Restart Tomcat: Restart tomcat to insure it has the DERBY libraries loaded</p>
   
 
 
