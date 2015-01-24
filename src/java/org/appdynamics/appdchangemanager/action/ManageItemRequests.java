@@ -38,6 +38,7 @@ public class ManageItemRequests {
         log.info("Retreived source, getting dest access.");
         access=ManageRESTAccess.getRESTAccess(request.getDestConn());
         
+        // We should determine if it exist before we attempt to get it
         String destXml = getItem(request,request.getDestItemLocation(),access);
         
         log.info("Retreived dest, posting the item.");

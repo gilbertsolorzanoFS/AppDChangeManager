@@ -52,6 +52,7 @@ public class ACMS {
     public static final String NAME="name";
     public static final String REQUESTER="requester";
     public static final String REQUEST_TIME="requestTime";
+    public static final String ITEM="item";
     public static final String ITEM_LOCATION="itermLocation";
     public static final String ITEM_LOCATION_TYPE="itemLocationType";
     public static final String ITEM_TYPE="itemType";
@@ -85,7 +86,10 @@ public class ACMS {
     public static final String NEW_VERSION_SRC="newVersionSource";
     public static final String NEW_VERSION_LOC="newVersionLocation";
     public static final String SRC_ITEM_LOCATION="srcItemLocation";
+    public static final String SRC_ITEM_FILE="srcItemFile";
     public static final String DEST_ITEM_LOCATION="destItemLocation";
+    public static final String DEST_ITEM_FILE="destItemFile";
+    public static final String DEST_ITEM_EXISTED="destItemExisted";
     public static final String ORIG_VERSION="origVersion";
     public static final String ORIG_VERSION_SRC="origVersionSource";
     public static final String EXECUTION_TIME="executionTime";
